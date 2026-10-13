@@ -1,0 +1,42 @@
+# sealed-agents POC 3 (throwaway). No secret values here: POC_SECRET and the volume key are released by
+# our own keyserver after it verifies this enclave's attestation, repo, tag and domain.
+cvm-version: 0.14.13
+cpus: 2
+memory: 8192
+
+keyserver-url: https://35-223-205-2.sslip.io
+
+networks:
+  egress:
+    egress: allowlist
+    allow:
+      - imap.gmail.com
+      - inference.tinfoil.sh
+
+volumes:
+  - name: data
+    key-secret: VOLUME_KEY
+    owner: 65532
+
+containers:
+  - name: app
+    image: "ghcr.io/pcanterini/sealed-tinfoil-poc@sha256:0c4743f908985be6ca90e8b3e001d81c4cfac42baf5ec991def0c3c62aba0a65"
+    env:
+      - APP_VERSION: "v0.0.1"
+    secrets:
+      - POC_SECRET
+    attestation: true
+    networks: [egress]
+    volumes: [data:/data]
+    restart: always
+    healthcheck:
+      test: ["CMD", "/app", "-health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+shim:
+  upstream-port: 8080
+  paths:
+    - /*
