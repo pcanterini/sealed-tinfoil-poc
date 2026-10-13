@@ -16,7 +16,7 @@ networks:
 volumes:
   - name: data
     key-secret: VOLUME_KEY
-    owner: 65532
+    owner: "65532:65532"
 
 containers:
   - name: app
@@ -27,7 +27,7 @@ containers:
       - POC_SECRET
     attestation: true
     networks: [egress]
-    volumes: [data:/data]
+    persistent_volumes: ["data:/data"]   # the docs say volumes:, the validator wants persistent_volumes
     restart: always
     healthcheck:
       test: ["CMD", "/app", "-health"]
