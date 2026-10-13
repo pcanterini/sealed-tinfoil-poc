@@ -1,5 +1,5 @@
 # sealed-agents POC 3 (throwaway). No secret values here: POC_SECRET is released by our own keyserver after it
-# verifies this enclave's attestation, repo, tag and domain. (v0.0.2: deliberately NOT in the keyserver policy)
+# verifies this enclave's attestation, repo, tag and domain. (v0.0.3: approved)
 cvm-version: 0.14.13
 cpus: 2
 memory: 8192
@@ -17,7 +17,7 @@ containers:
   - name: app
     image: "ghcr.io/pcanterini/sealed-tinfoil-poc@sha256:0c4743f908985be6ca90e8b3e001d81c4cfac42baf5ec991def0c3c62aba0a65"
     env:
-      - APP_VERSION: "v0.0.2"
+      - APP_VERSION: "v0.0.3"
     secrets:
       - POC_SECRET
     attestation: true
