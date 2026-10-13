@@ -1,8 +1,10 @@
-# Sanity release (v0.0.90): same image, no keyserver, no volume, no secrets. Used only to check that a
-# plain instance boots on this account.
+# Diagnostic release (v0.0.91): keyserver + private secret, no volume. Checks whether private secret
+# delivery alone boots on this account.
 cvm-version: 0.14.13
 cpus: 2
 memory: 8192
+
+keyserver-url: https://35-223-205-2.sslip.io
 
 networks:
   egress:
@@ -15,7 +17,9 @@ containers:
   - name: app
     image: "ghcr.io/pcanterini/sealed-tinfoil-poc@sha256:0c4743f908985be6ca90e8b3e001d81c4cfac42baf5ec991def0c3c62aba0a65"
     env:
-      - APP_VERSION: "v0.0.90-sanity"
+      - APP_VERSION: "v0.0.91-keyserver-only"
+    secrets:
+      - POC_SECRET
     attestation: true
     networks: [egress]
     restart: always
