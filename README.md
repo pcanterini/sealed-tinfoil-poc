@@ -11,3 +11,16 @@ let us hold the only keys? Nothing here is secret, and nothing here is meant for
   release's measurement into Sigstore.
 
 Licensed under Apache-2.0.
+
+## Releases used in the test (2026-10-13)
+
+| Tag | Config | Keyserver policy |
+|---|---|---|
+| v0.0.1 | keyserver + private secret + encrypted volume (auto-unlock) | approved, but the enclave never launched with a volume attached |
+| v0.0.2 | keyserver + private secret | deliberately not approved: refused |
+| v0.0.3, v0.0.4 | keyserver + private secret | approved for one instance domain |
+| v0.0.90 | no keyserver, no volume (sanity) | n/a |
+| v0.0.91 | keyserver + private secret (diagnostic) | approved |
+| v0.0.92 | volume with manual unlock (diagnostic) | n/a; never launched |
+
+`main` holds the v0.0.4 config.
