@@ -44,4 +44,5 @@ jobs:
       - env:
           DIGEST: ${{ steps.build.outputs.digest }}
           IMAGE: ghcr.io/${{ github.repository }}
-        run: printf 'Image: %s@%s\n' "$IMAGE" "$DIGEST" | tee -a "$GITHUB_STEP_SUMMARY"
+        run: |
+          printf 'Image: %s@%s\n' "$IMAGE" "$DIGEST" | tee -a "$GITHUB_STEP_SUMMARY"
